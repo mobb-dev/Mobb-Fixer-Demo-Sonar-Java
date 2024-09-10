@@ -83,12 +83,10 @@ jobs:
         run: |
           REPO=$(git remote get-url origin)
           REPO=${REPO%".git"}
-          COMMIT_HASH=$(git rev-parse $GITHUB_HEAD_REF)
 
           npx --yes mobbdev@latest review \
-            -r $REPO \
             --ref $GITHUB_HEAD_REF \
-            --ch $COMMIT_HASH \
+            --ch $GITHUB_SHA \
             --api-key ${{ secrets.MOBB_API_TOKEN }} \
             -f report.json \
             --pr ${{ github.event.pull_request.number }} \
