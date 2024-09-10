@@ -85,6 +85,7 @@ jobs:
           REPO=${REPO%".git"}
 
           npx --yes mobbdev@latest review \
+            -r $REPO \
             --ref $GITHUB_HEAD_REF \
             --ch $GITHUB_SHA \
             --api-key ${{ secrets.MOBB_API_TOKEN }} \
