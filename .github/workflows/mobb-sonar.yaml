@@ -80,9 +80,25 @@ jobs:
 
       - name: Run Mobb on the findings and get fixes
         if: always()
-        uses: mobb-dev/action/review@v1.1
-        with:
-          report-file: "report.json"
-          api-key: ${{ secrets.MOBB_API_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          scanner: sonarqube
+        run: |
+          REPO=$(git remote get-url origin)
+          REPO=${REPO%".git"}
+          COMMIT_HASH=$(git rev-parse $GITHUB_HEAD_REF)
+
+          npx --yes mobbdev@latest review \
+            -r $REPO \
+            --ref $GITHUB_HEAD_REF \
+            --ch $COMMIT_HASH \
+            --api-key ${{ secrets.MOBB_API_TOKEN }} \
+            -f report.json \
+            --pr ${{ github.event.pull_request.number }} \
+            --github-token ${{ secrets.GITHUB_TOKEN }} \
+            --scanner sonarqube \
+            -p .
+#        if: always()
+#        uses: mobb-dev/action/review@v1.1
+#        with:
+#          report-file: "report.json"
+#          api-key: ${{ secrets.MOBB_API_TOKEN }}
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          scanner: sonarqube
