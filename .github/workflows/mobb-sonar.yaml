@@ -80,7 +80,7 @@ jobs:
 
       - name: Run Mobb on the findings and get fixes
         if: always()
-        uses: mobb-dev/action/review@5cb4f9bd9dee51205cbc73f3caf7028aad872a08
+        uses: mobb-dev/action/review@538fda7f5858daa144f178c37eb031007298684b
         with:
           report-file: "report.json"
           api-key: ${{ secrets.MOBB_API_TOKEN }}
